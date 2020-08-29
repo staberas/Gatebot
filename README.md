@@ -23,3 +23,6 @@ Problems that might arise
 - Removed my face biometrics you have to add manually for now  
 - some folders might miss 
 - you cant yet activate 20class recognition without crashing the facedetection later
+- animation speed is slow until i can figure out a way to multithread 
+- NOTE: USE THE MINIMUM FIRMWARE
+- 
