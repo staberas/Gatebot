@@ -25,4 +25,4 @@ Problems that might arise
 - you cant yet activate 20class recognition without crashing the facedetection later
 - animation speed is slow until i can figure out a way to multithread 
 - NOTE: USE THE MINIMUM FIRMWARE
-- 
+- Rename boot_waifu.py to boot.py 
