@@ -3,10 +3,10 @@ WELCOME TO THE GATEBOT PROJECT
 HARDWARE REQUIREMENTS:
 This projects uses currently a 
 - Sipeed Maix Bit with :
-- - 4 axis button
-- - Servo 
-- - A push button
-- - An LCD screen & camera (bundled)
+  - 4 axis button
+  - Servo 
+  - A push button
+  - An LCD screen & camera (bundled)
 
 FUTURE ENCHANCEMENTS:
 - Raspberry Pi will handle the chatbot conversational aspects & wifi communications etc
