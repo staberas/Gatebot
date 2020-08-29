@@ -19,4 +19,7 @@ Currently the device is being debugged using an ESP32 since the USB output is be
 This will be filled with documentaion
 - TO DO -  
 
-Problems 
+Problems that might arise
+- Removed my face biometrics you have to add manually for now  
+- some folders might miss 
+- you cant yet activate 20class recognition without crashing the facedetection later
