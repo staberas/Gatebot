@@ -20,6 +20,7 @@ This will be filled with documentaion
 - TO DO -  
 
 Problems that might arise
+- Dont add pcb-files & ai-coprocessor files in your sd card 
 - Removed my face biometrics you have to add manually for now  
 - some folders might miss 
 - you cant yet activate 20class recognition without crashing the facedetection later
