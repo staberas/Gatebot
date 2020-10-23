@@ -2,7 +2,14 @@ import sensor
 import image
 import lcd
 import time
+from fpioa_manager import fm
+from machine import UART
 
+fm.register(15, fm.fpioa.UART2_TX)
+fm.register(7, fm.fpioa.UART2_RX)
+uart_B = UART (UART.UART2, 115200, 8, None, 1, timeout = 1000, read_buf_len = 4096)
+print('start UART B')
+uart_B.write('UART B START \n\r')
 clock = time.clock()
 lcd.init()
 sensor.reset()
@@ -23,6 +30,7 @@ while True:
         print(res[0].payload())
         img.draw_rectangle(res[0].x(),res[0].y(),res[0].w(),res[0].h(),color=(255,1,1))
         print(res[0])
+        uart_B.write(str(res[0]))        
     blobs = img.find_blobs([green_threshold])
     if blobs:
         for b in blobs:
