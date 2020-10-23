@@ -13,6 +13,7 @@ sensor.reset()
 sensor.set_pixformat(sensor.RGB565)
 sensor.set_framesize(sensor.QVGA)
 sensor.set_vflip(1)
+sensor.skip_frames(30)
 sensor.run(1)
 clock = time.clock()
 classes = ['aeroplane', 'bicycle', 'bird', 'boat', 'bottle', 'bus', 'car', 'cat', 'chair', 'cow', 'diningtable', 'dog', 'horse', 'motorbike', 'person', 'pottedplant', 'sheep', 'sofa', 'train', 'tvmonitor']
@@ -27,15 +28,17 @@ while(True):
     read_data = uart_B.read()
     #qr = ujson.loads()
     if read_data != '' and read_data != None:
-        qr = str(read_data)
+        qr = str(read_data.decode("utf-8"))
+        jsonqr = ujson.loads(qr)
         print(qr)
+        #a = img.draw_rectangle(jsonqr['x'],jsonqr['y'],jsonqr['w'],jsonqr['h'],lcd.RED)
     if code:
         for i in code:
-            a=img.draw_rectangle(i.rect())
+            a = img.draw_rectangle(i.rect())
             a = lcd.display(img)
             for i in code:
-                lcd.draw_string(i.x(), i.y(), classes[i.classid()], lcd.RED, lcd.WHITE)
-                lcd.draw_string(i.x(), i.y()+12, '%.3f'%i.value(), lcd.RED, lcd.WHITE)
+                #img.draw_string(i.x(), i.y(), classes[i.classid()], lcd.RED, lcd.WHITE)
+                #a=img.draw_string(i.x(), i.y()+12, '%.3f'%i.value(), lcd.RED, lcd.WHITE)
                 print(i.x(),i.y(),i.w(),i.h(),i.value()," ",classes[i.classid()] )
     else:
         a = lcd.display(img)
