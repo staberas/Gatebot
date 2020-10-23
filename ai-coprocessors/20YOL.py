@@ -1,6 +1,13 @@
-import sensor,image,lcd,time
+import sensor,image,lcd,time,ujson
 import KPU as kpu
+from fpioa_manager import fm
+from machine import UART
 
+fm.register(15, fm.fpioa.UART2_TX)
+fm.register(7, fm.fpioa.UART2_RX)
+uart_B = UART (UART.UART2, 115200, 8, None, 1, timeout = 1000, read_buf_len = 4096)
+print('start UART B - reading mode')
+uart_B.write('UART B START - reading mode \n\r')
 lcd.init(freq=15000000)
 sensor.reset()
 sensor.set_pixformat(sensor.RGB565)
@@ -17,6 +24,11 @@ while(True):
     img = sensor.snapshot()
     code = kpu.run_yolo2(task, img)
     #print(clock.fps())
+    read_data = uart_B.read()
+    #qr = ujson.loads()
+    if read_data != '' and read_data != None:
+        qr = str(read_data)
+        print(qr)
     if code:
         for i in code:
             a=img.draw_rectangle(i.rect())
