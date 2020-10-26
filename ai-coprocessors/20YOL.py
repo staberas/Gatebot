@@ -20,6 +20,12 @@ classes = ['aeroplane', 'bicycle', 'bird', 'boat', 'bottle', 'bus', 'car', 'cat'
 task = kpu.load(0x500000)
 anchor = (1.08, 1.19, 3.42, 4.41, 6.63, 11.38, 9.42, 5.11, 16.62, 10.52)
 a = kpu.init_yolo2(task, 0.5, 0.3, 5, anchor)
+wt = 5
+while(wt>0):
+    time.sleep(5) # seconds
+    wt -= 1
+    print("starting in: "+ str(wt))
+del wt
 while(True):
     clock.tick()
     img = sensor.snapshot()
