@@ -22,7 +22,7 @@ anchor = (1.08, 1.19, 3.42, 4.41, 6.63, 11.38, 9.42, 5.11, 16.62, 10.52)
 a = kpu.init_yolo2(task, 0.5, 0.3, 5, anchor)
 wt = 5
 while(wt>0):
-    time.sleep(5) # seconds
+    time.sleep(1) # seconds
     wt -= 1
     print("starting in: "+ str(wt))
 del wt
@@ -33,11 +33,14 @@ while(True):
     #print(clock.fps())
     read_data = uart_B.read()
     #qr = ujson.loads()
-    if read_data != '' and read_data != None:
-        qr = str(read_data.decode("utf-8"))
-        jsonqr = ujson.loads(qr)
-        print(qr)
-        #a = img.draw_rectangle(jsonqr['x'],jsonqr['y'],jsonqr['w'],jsonqr['h'],lcd.RED)
+    try:
+        if read_data != '' and read_data != None:
+            qr = str(read_data.decode("utf-8"))
+            jsonqr = ujson.loads(qr)
+            a = img.draw_rectangle(jsonqr['x']+10,jsonqr['y'],jsonqr['w'],jsonqr['h'],lcd.RED)
+            print(qr)
+    except:
+        #print("Failed JSON decode")
     if code:
         for i in code:
             a = img.draw_rectangle(i.rect())
@@ -45,7 +48,9 @@ while(True):
             for i in code:
                 #img.draw_string(i.x(), i.y(), classes[i.classid()], lcd.RED, lcd.WHITE)
                 #a=img.draw_string(i.x(), i.y()+12, '%.3f'%i.value(), lcd.RED, lcd.WHITE)
-                print(i.x(),i.y(),i.w(),i.h(),i.value()," ",classes[i.classid()] )
+                #jsoni = ujson.loads()
+                print(i)
+                #print(classes[i.classid()])
     else:
         a = lcd.display(img)
 a = kpu.deinit(task)
