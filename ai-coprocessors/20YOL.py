@@ -5,9 +5,13 @@ from machine import UART
 
 fm.register(15, fm.fpioa.UART2_TX)
 fm.register(7, fm.fpioa.UART2_RX)
+fm.register(6, fm.fpioa.UART1_TX)
+fm.register(8, fm.fpioa.UART1_RX)
 uart_B = UART (UART.UART2, 115200, 8, None, 1, timeout = 1000, read_buf_len = 4096)
+uart_C = UART (UART.UART1, 115200, 8, None, 1, timeout = 1000, read_buf_len = 4096)
 print('start UART B - reading mode')
 uart_B.write('UART B START - reading mode \n\r')
+uart_C.write('UART C START - push mode \n\r')
 lcd.init(freq=15000000)
 sensor.reset()
 sensor.set_pixformat(sensor.RGB565)
@@ -39,8 +43,9 @@ while(True):
             jsonqr = ujson.loads(qr)
             a = img.draw_rectangle(jsonqr['x']+10,jsonqr['y'],jsonqr['w'],jsonqr['h'],lcd.RED)
             print(qr)
-    except:
+            uart_C.write(qr+"\n\r")
         #print("Failed JSON decode")
+    except:
         print(" ")
     if code:
         for i in code:
@@ -51,6 +56,7 @@ while(True):
                 #a=img.draw_string(i.x(), i.y()+12, '%.3f'%i.value(), lcd.RED, lcd.WHITE)
                 #jsoni = ujson.loads()
                 print(i)
+                uart_C.write(str(i)+"\n\r")
                 #print(classes[i.classid()])
     else:
         a = lcd.display(img)
