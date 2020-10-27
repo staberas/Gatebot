@@ -41,6 +41,7 @@ while(True):
             print(qr)
     except:
         #print("Failed JSON decode")
+        print(" ")
     if code:
         for i in code:
             a = img.draw_rectangle(i.rect())
