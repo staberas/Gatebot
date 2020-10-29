@@ -29,6 +29,8 @@ while(wt>0):
     time.sleep(1) # seconds
     wt -= 1
     print("starting in: "+ str(wt))
+    uart_C.write+("starting in: "+ str(wt))
+
 del wt
 while(True):
     clock.tick()
@@ -37,6 +39,7 @@ while(True):
     #print(clock.fps())
     read_data = uart_B.read()
     #qr = ujson.loads()
+    uart_C.write("serial uart \n\r")
     try:
         if read_data != '' and read_data != None:
             qr = str(read_data.decode("utf-8"))
