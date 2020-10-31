@@ -12,6 +12,7 @@ import utime
 import ubinascii
 import gc
 import uerrno
+import ujson
 from Maix import utils
 from Maix import GPIO
 from machine import UART
@@ -77,6 +78,7 @@ key_pressed=0 # 初始化按键引脚 分配GPIO7 到 FPIO16
 dir_pressed=0
 menuenabled=False
 menu_position = 0
+classes = ['aeroplane', 'bicycle', 'bird', 'boat', 'bottle', 'bus', 'car', 'cat', 'chair', 'cow', 'diningtable', 'dog', 'horse', 'motorbike', 'person', 'pottedplant', 'sheep', 'sofa', 'train', 'tvmonitor']
 
 def check_key(): # 按键检测函数，用于在循环中检测按键是否按下，下降沿有效
     global last_key_state
@@ -363,15 +365,21 @@ try:
                 uart_B.write(str(timeout)+" ms passed - greet when user returns | \n\r")
                 greetback = True #scheduled_time = timeout+now
         #read_data = uart_C.readline()
-        try:
-            read_data = uart_C.read()
+        try: 
+            read_data = uart_C.readline()
             dataout = str(read_data)
             if dataout != '' and dataout != 'None':
                 dataout = str(read_data.decode('utf-8'))
-                #jsonqr = ujson.loads(dataout)
-                uart_B.write("UART2: "+dataout)
+                try:
+                    dataout = dataout.replace('\n', '')
+                    dataout = dataout.replace('\r', '')
+                    dataout = dataout.replace('\'', '')
+                    jsonqr = ujson.loads(dataout)
+                    uart_B.write(str(classes[jsonqr['classid']]))
+                except Exception as g:
+                    uart_B.write(str(g)+" detected \n\r ")
+                uart_B.write(" json uart: "+dataout)
                 #uart_B.write("UART2 read_data: "+read_data.decode("utf-8")+" \n\r")
-                #uart_B.write(uart_C.readline())
         except Exception as e:
             uart_B.write(str(e))
         if code:
